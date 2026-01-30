@@ -15,7 +15,7 @@ Welcome! This GitHub organization is the home to all projects and repositories a
 
 Our goal is to build a **practical, well-documented, and accessible racecar** that are easy to use, easy to contribute to, and an educational tool for students and researchers alike.
 
-Whether you’re here to **use our software**, **learn from it**, or **contribute**, you’re in the right place! 🏎️
+Whether you’re here to **use our software**, **learn from it**, or **contribute**, you’re in the right place!
 
 ---
 
@@ -69,9 +69,9 @@ All projects in this organization are open-source, but **licenses may vary by re
 Always check the `LICENSE` file in each repository before using or redistributing the work.
 
 In general:
-- **Software repositories** are typically licensed under **GNU GENERAL PUBLIC LICENSE Version 3 (GPLv3)**
-- **Hardware and open-hardware repositories** are typically licensed under **CERN Open Hardware Licence Version 2 - Strongly Reciprocal (CERN-OHL-S)**
+- **Software repositories** are typically licensed under **GNU GENERAL PUBLIC LICENSE Version 3 ([GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html))**
+- **Hardware and open-hardware repositories** are typically licensed under **CERN Open Hardware Licence Version 2 - Strongly Reciprocal ([CERN-OHL-S](https://cern-ohl.web.cern.ch))**
 
 The exact license and its terms are defined in each repository and take precedence over this general guidance.
 
-We’re excited to build this community together — welcome aboard! 🚀
+We’re excited to build this community together, welcome aboard :)
