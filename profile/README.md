@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="../assets/neobotics-full-logo-dark.png" alt="Neobotics Foundation Logo" width="500"/>
+<img src="../assets/neobotics-full-logo-dark.png" alt="Neobotics Foundation Logo" width="420"/>
 
 Empowering the next generation of robotics education
 
@@ -13,11 +13,13 @@ Empowering the next generation of robotics education
 
 <img src="../assets/red-line.svg" alt="" width="760"/>
 
-</div>
+[![NeoRacer](https://img.shields.io/badge/NeoRacer-1B2036?style=flat-square)](#️-neoracer-v1)
+[![How to Use](https://img.shields.io/badge/How%20to%20Use-1B2036?style=flat-square)](#-how-to-use-this-github)
+[![Community](https://img.shields.io/badge/Community-1B2036?style=flat-square)](#-community-guidelines)
+[![Support](https://img.shields.io/badge/Support-1B2036?style=flat-square)](#️-support-neobotics)
+[![Licensing](https://img.shields.io/badge/Licensing-1B2036?style=flat-square)](#-licensing)
 
-<p align="center">
-<a href="#neoracer-v1">NeoRacer</a> · <a href="#how-to-use-this-github">How to Use</a> · <a href="#community-guidelines">Community</a> · <a href="#support-neobotics">Support</a> · <a href="#licensing">Licensing</a>
-</p>
+</div>
 
 <br>
 
@@ -29,7 +31,7 @@ Our goal is to build a **practical, well-documented, and accessible racecar** th
 
 Whether you’re here to **use our software**, **learn from it**, or **contribute**, you’re in the right place!
 
-## NeoRacer V1
+## 🏎️ NeoRacer V1
 
 The **NeoRacer** is our flagship autonomous racing platform designed for education and research.
 
@@ -37,6 +39,8 @@ The **NeoRacer** is our flagship autonomous racing platform designed for educati
 <img src="../assets/neoracer-line-1.png" alt="NeoRacer" width="600"/>
 </div>
 
+
+<div align="center">
 
 ### Specifications
 
@@ -58,9 +62,11 @@ The **NeoRacer** is our flagship autonomous racing platform designed for educati
 | | IMU | 9-axis (accelerometer, magnetometer, gyroscope) |
 | | Encoder | Incremental A/B/Z 3-channel |
 
+</div>
+
 ---
 
-## How to Use This Github
+## 📖 How to Use This Github
 
 ### If you just want to use the projects
 1. Browse the repositories in this organization
@@ -70,7 +76,7 @@ The **NeoRacer** is our flagship autonomous racing platform designed for educati
 
 
 ### If you want to ask questions or discuss ideas
-Use **GitHub Discussions** for:
+Use **[GitHub Discussions](https://github.com/orgs/Neobotics-Foundation-Inc/discussions)** for:
 - General questions
 - Design discussions
 - Feature ideas
@@ -81,7 +87,7 @@ Use **GitHub Issues** for:
 - Clearly defined feature requests
 - Reproducible technical problems
 
-### If you want to contribute
+### 🤝 If you want to contribute
 We welcome contributions of all kinds: code, documentation, examples, tests, or suggestions.
 
 1. Start by reading the repository’s issues
@@ -93,7 +99,7 @@ If you’re unsure where to start, feel free to open a discussion first.
 
 ---
 
-## Community Guidelines
+## 🌍 Community Guidelines
 
 We aim to keep this space:
 - Respectful and welcoming
@@ -104,7 +110,7 @@ Please be kind, assume good intent, and help us maintain a positive and producti
 
 ---
 
-## Support Neobotics
+## ♥️ Support Neobotics
 
 There are many ways to help the Neobotics community grow:
 
@@ -118,7 +124,7 @@ There are many ways to help the Neobotics community grow:
 
 ---
 
-## Licensing
+## 📃 Licensing
 
 All projects in this organization are open-source, but **licenses may vary by repository**.  
 Always check the `LICENSE` file in each repository before using or redistributing the work.
