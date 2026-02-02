@@ -33,7 +33,9 @@ Whether you’re here to **use our software**, **learn from it**, or **contribut
 
 ## 🏎️ NeoRacer V1
 
-The **NeoRacer** is our flagship autonomous racing platform designed for education and research.
+The **NeoRacer** is designed to be both a benchmark platform for autonomous vehicle research and a flagship system for self-driving education. 
+
+It faithfully replicates real-world road scenarios at scale, enabling students and researchers to understand, test, and validate the full autonomous driving stack, from perception and planning to control and deployment. 
 
 <div align="center">
 <img src="../assets/neoracer-line-1.png" alt="NeoRacer" width="600"/>
@@ -64,6 +66,8 @@ The **NeoRacer** is our flagship autonomous racing platform designed for educati
 
 </div>
 
+By bridging education and experimentation, NeoRacer serves as a practical testbed for investigating and addressing many of the open challenges that continue to define autonomous vehicle research today.
+
 ---
 
 ## 📖 How to Use This Github
@@ -87,7 +91,7 @@ Use **GitHub Issues** for:
 - Clearly defined feature requests
 - Reproducible technical problems
 
-### 🤝 If you want to contribute
+### If you want to contribute
 We welcome contributions of all kinds: code, documentation, examples, tests, or suggestions.
 
 1. Start by reading the repository’s issues
