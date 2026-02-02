@@ -14,6 +14,7 @@ Empowering the next generation of robotics education
 <img src="../assets/red-line.svg" alt="" width="760"/>
 
 [![NeoRacer](https://img.shields.io/badge/NeoRacer-1B2036?style=flat-square)](#️-neoracer-v1)
+[![Ecosystem](https://img.shields.io/badge/Ecosystem-1B2036?style=flat-square)](#️-ecosystem)
 [![How to Use](https://img.shields.io/badge/How%20to%20Use-1B2036?style=flat-square)](#-how-to-use-this-github)
 [![Community](https://img.shields.io/badge/Community-1B2036?style=flat-square)](#-community-guidelines)
 [![Support](https://img.shields.io/badge/Support-1B2036?style=flat-square)](#️-support-neobotics)
@@ -67,6 +68,17 @@ It faithfully replicates real-world road scenarios at scale, enabling students a
 </div>
 
 By bridging education and experimentation, NeoRacer serves as a practical testbed for investigating and addressing many of the open challenges that continue to define autonomous vehicle research today.
+
+---
+
+## 🗂️ Ecosystem
+
+Explore the repositories that power the NeoRacer platform:
+
+| Repository | Description | Language | License | Issues | Contributors | Activity |
+|------------|-------------|----------|---------|--------|--------------|----------|
+| [**neoracer_ros2_driver**](https://github.com/Neobotics-Foundation-Inc/neoracer_ros2_driver) | ROS2 driver with OSRbot stack | ![Language](https://img.shields.io/github/languages/top/Neobotics-Foundation-Inc/neoracer_ros2_driver?style=flat-square&labelColor=1B2036) | ![License](https://img.shields.io/github/license/Neobotics-Foundation-Inc/neoracer_ros2_driver?style=flat-square&labelColor=1B2036) | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/neoracer_ros2_driver?style=flat-square&labelColor=1B2036) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/neoracer_ros2_driver?style=flat-square&labelColor=1B2036) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/neoracer_ros2_driver?style=flat-square&labelColor=1B2036) |
+| [**NeoRacer-V2**](https://github.com/Neobotics-Foundation-Inc/NeoRacer-V2) | Chassis CAD & manufacturing docs | ![Language](https://img.shields.io/github/languages/top/Neobotics-Foundation-Inc/NeoRacer-V2?style=flat-square&labelColor=1B2036) | ![License](https://img.shields.io/github/license/Neobotics-Foundation-Inc/NeoRacer-V2?style=flat-square&labelColor=1B2036) | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/NeoRacer-V2?style=flat-square&labelColor=1B2036) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/NeoRacer-V2?style=flat-square&labelColor=1B2036) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/NeoRacer-V2?style=flat-square&labelColor=1B2036) |
 
 ---
 
