@@ -26,7 +26,7 @@ Empowering the next generation of robotics education
 
 # Welcome to Neobotics
 
-Welcome! This GitHub organization is the home to all projects and repositories associated with **Neobotics Foundation Inc.**, along with the broader community discussions and support.
+Welcome! Our GitHub organization is the home to all projects and repositories associated with **Neobotics Foundation Inc.**, along with the broader community discussions and support.
 
 Our goal is to build a **practical, well-documented, and accessible racecar** that is easy to use, easy to contribute to, and an educational tool for students and researchers alike.
 
@@ -106,10 +106,11 @@ Use **GitHub Issues** for:
 ### If you want to contribute
 We welcome contributions of all kinds: code, documentation, examples, tests, or suggestions.
 
-1. Start by reading the repository’s issues
-2. Fork the repository and create a feature branch
-3. Make small, focused changes
-4. Open a pull request with a clear explanation of what you changed and why
+1. Start by reading the `CONTRIBUTING.md` file in the repository if available
+2. Familiarize yourself with the repository's issues
+3. Fork the repository and create a feature branch
+4. Make small, focused changes
+5. Open a pull request with a clear explanation of what you changed and why
 
 If you’re unsure where to start, feel free to open a discussion first.
 
