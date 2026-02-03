@@ -1,0 +1,102 @@
+name: Update README ecosystem table
+
+on:
+  schedule:
+    # daily @ midnight UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: 'Reason for manually triggering the update'
+        required: false
+        default: 'Manual refresh of ecosystem table'
+        type: string
+  repository_dispatch:
+    types: [update-ecosystem]
+
+jobs:
+  update-readme:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    
+    steps:
+      - name: Checkout .github repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Update README ecosystem table
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const fs = require('fs');
+            
+            // Fetch all public repos in Neobotics organization 
+            const repos = await github.paginate(github.rest.repos.listForOrg, {
+              org: 'Neobotics-Foundation-Inc',
+              type: 'public',
+              sort: 'updated',
+              direction: 'desc'
+            });
+            
+            // Filter out .github repo and any archived repos
+            const filteredRepos = repos.filter(repo => 
+              !repo.archived && 
+              repo.name !== '.github'
+            );
+            
+            // Check if there are any repos
+            if (filteredRepos.length === 0) {
+              console.log('No public repositories found');
+              return;
+            }
+            
+            // Generate table rows
+            const tableRows = filteredRepos.map(repo => {
+              const name = repo.name;
+              // Escape pipe characters and truncate description
+              let description = repo.description || 'No description';
+              description = description.replace(/\|/g, '\\|');
+              if (description.length > 40) {
+                description = description.substring(0, 40) + '...';
+              }
+              
+              return `| [**${name}**](${repo.html_url}) | ${description} | ![Language](https://img.shields.io/github/languages/top/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![License](https://img.shields.io/github/license/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) |`;
+            }).join('\n');
+            
+            // Build the complete table
+            const tableHeader = `| Repository | Description | Language | License | Issues | Contributors | Activity |
+|------------|-------------|----------|---------|--------|--------------|----------|`;
+            
+            const newTable = `${tableHeader}\n${tableRows}`;
+            
+            // Read the current README
+            const readmePath = '.github/profile/README.md';
+            let readme = fs.readFileSync(readmePath, 'utf8');
+            
+            // Replace the ecosystem table using regex
+            // Match from the table header to the next ---
+            const tableRegex = /\| Repository \| Description \| Language \| License \| Issues \| Contributors \| Activity \|[\s\S]*?\n\n---/;
+            
+            if (tableRegex.test(readme)) {
+              readme = readme.replace(tableRegex, `${newTable}\n\n---`);
+              console.log('Successfully replaced ecosystem table');
+            } else {
+              console.log('Could not find ecosystem table to replace. Make sure the README has the correct table header.');
+              console.log('Expected header: | Repository | Description | Language | License | Issues | Contributors | Activity |');
+              return;
+            }
+            
+            // Write the updated README
+            fs.writeFileSync(readmePath, readme);
+            
+            console.log(`Updated ecosystem table with ${filteredRepos.length} repositories`);
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add .github/profile/README.md
+          git diff --staged --quiet || git commit -m "docs: auto-update ecosystem table [skip ci]"
+          git push
