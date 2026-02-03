@@ -32,7 +32,7 @@ jobs:
           script: |
             const fs = require('fs');
             
-            // Fetch all public repos in Neobotics organization 
+            // grab all public repos
             const repos = await github.paginate(github.rest.repos.listForOrg, {
               org: 'Neobotics-Foundation-Inc',
               type: 'public',
@@ -40,24 +40,25 @@ jobs:
               direction: 'desc'
             });
             
-            // Filter out .github repo and any archived repos
+            // remove the .github repo and any archived repos
             const filteredRepos = repos.filter(repo => 
               !repo.archived && 
               repo.name !== '.github'
             );
             
-            // Check if there are any repos
+            // accounting for no public repositories found
             if (filteredRepos.length === 0) {
               console.log('No public repositories found');
               return;
             }
             
-            // Generate table rows
+            // generate table rows
             const tableRows = filteredRepos.map(repo => {
               const name = repo.name;
-              // Escape pipe characters and truncate description
+              // account for pipe characters in description by changing | to \|
               let description = repo.description || 'No description';
               description = description.replace(/\|/g, '\\|');
+              // also truncate the description to 40 characters
               if (description.length > 40) {
                 description = description.substring(0, 40) + '...';
               }
@@ -65,17 +66,16 @@ jobs:
               return `| [**${name}**](${repo.html_url}) | ${description} | ![Language](https://img.shields.io/github/languages/top/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![License](https://img.shields.io/github/license/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) |`;
             }).join('\n');
             
-            // Build the complete table
-            const tableHeader = `| Repository | Description | Language | License | Issues | Contributors | Activity |
-|------------|-------------|----------|---------|--------|--------------|----------|`;
+            // build the complete table
+            const tableHeader = '| Repository | Description | Language | License | Issues | Contributors | Activity |\n|------------|-------------|----------|---------|--------|--------------|----------|';
             
             const newTable = `${tableHeader}\n${tableRows}`;
             
-            // Read the current README
+            // read the current README
             const readmePath = '.github/profile/README.md';
             let readme = fs.readFileSync(readmePath, 'utf8');
             
-            // Replace the ecosystem table using regex
+            // replace the ecosystem table using regex
             // Match from the table header to the next ---
             const tableRegex = /\| Repository \| Description \| Language \| License \| Issues \| Contributors \| Activity \|[\s\S]*?\n\n---/;
             
@@ -88,7 +88,7 @@ jobs:
               return;
             }
             
-            // Write the updated README
+            // write the updated README
             fs.writeFileSync(readmePath, readme);
             
             console.log(`Updated ecosystem table with ${filteredRepos.length} repositories`);
