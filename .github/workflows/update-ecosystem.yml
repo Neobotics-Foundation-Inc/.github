@@ -44,7 +44,7 @@ jobs:
             const filteredRepos = repos.filter(repo => 
               !repo.archived && 
               repo.name !== '.github'
-            );
+            ).sort((a, b) => a.name.localeCompare(b.name));
             
             // accounting for no public repositories found
             if (filteredRepos.length === 0) {
