@@ -63,11 +63,11 @@ jobs:
                 description = description.substring(0, 40) + '...';
               }
               
-              return `| [**${name}**](${repo.html_url}) | ${description} | ![Language](https://img.shields.io/github/languages/top/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![License](https://img.shields.io/github/license/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) |`;
+              return `| [**${name}**](${repo.html_url})<br>${description} | ![Language](https://img.shields.io/github/languages/top/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![License](https://img.shields.io/github/license/Neobotics-Foundation-Inc/${name}?style=flat-square&label=) | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/${name}?style=flat-square&label=) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/${name}?style=flat-square&label=) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) |`;
             }).join('\n');
             
             // build the complete table
-            const tableHeader = '| Repository | Description | Language | License | Issues | Contributors | Activity |\n|------------|-------------|----------|---------|--------|--------------|----------|';
+            const tableHeader = '| Repository | Language | License | Issues | Contributors | Activity |\n|------------|:--------:|:-------:|:------:|:------------:|:--------:|';
             
             const newTable = `${tableHeader}\n${tableRows}`;
             
