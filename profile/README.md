@@ -39,7 +39,7 @@ The **NeoRacer** is designed to be both a benchmark platform for autonomous vehi
 It faithfully replicates real-world road scenarios at scale, enabling students and researchers to understand, test, and validate the full autonomous driving stack, from perception and planning to control and deployment. 
 
 <div align="center">
-<img src="../assets/neoracer-line-1.png" alt="NeoRacer" width="600"/>
+<img src="../assets/neoracer-art.png" alt="NeoRacer" width="600"/>
 </div>
 
 
