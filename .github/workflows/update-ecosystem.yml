@@ -78,14 +78,14 @@ jobs:
             
             // replace the ecosystem table using regex
             // Match from the table header to the next ---
-            const tableRegex = /\| Repository \| Description \| Language \| License \| Issues \| Contributors \| Activity \|[\s\S]*?\n\n---/;
-            
+            const tableRegex = /\| Repository \| Language \| License \| Issues \| Last Commit \| Contrib\. \|[\s\S]*?\n\n---/;
+
             if (tableRegex.test(readme)) {
               readme = readme.replace(tableRegex, `${newTable}\n\n---`);
               console.log('Successfully replaced ecosystem table');
             } else {
               console.log('Could not find ecosystem table to replace. Make sure the README has the correct table header.');
-              console.log('Expected header: | Repository | Description | Language | License | Issues | Contributors | Activity |');
+              console.log('Expected header: | Repository | Language | License | Issues | Last Commit | Contrib. |');
               return;
             }
             
