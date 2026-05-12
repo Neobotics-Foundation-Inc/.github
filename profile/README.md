@@ -117,6 +117,8 @@ We welcome contributions of all kinds: code, documentation, examples, tests, or 
 
 If you’re unsure where to start, feel free to open a discussion first.
 
+If you want to **create new repos** under the org, you can join the organization! Reach out via [Discord](https://discord.gg/7Ew7WQ4haj) or open a [discussion](https://github.com/orgs/Neobotics-Foundation-Inc/discussions) to get started.
+
 ---
 
 ## 🌍 Community Guidelines
