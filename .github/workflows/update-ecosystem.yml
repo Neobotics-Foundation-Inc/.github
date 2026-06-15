@@ -85,24 +85,43 @@ jobs:
               'MIT': '3FA66A', 'BSD-2-Clause': '57B894', 'BSD-3-Clause': '2E8B57', 'Apache-2.0': '1E7A46',
             };
             const enc = s => String(s).replace(/-/g, '--').replace(/_/g, '__').replace(/ /g, '%20').replace(/#/g, '%23');
-            // Hardware repos: GitHub reports no programming language for CAD/3D/PCB repos (their
-            // files are STEP/STL/etc.). Detect them (CERN open-hardware license, a hardware topic,
-            // or a hardware language) and show a "CAD" badge; a genuinely empty repo shows "none".
-            const HARDWARE_LANGS = new Set(['OpenSCAD','G-code','KiCad Layout','KiCad Schematic','KiCad Legacy Layout','Eagle','STL']);
-            const HARDWARE_TOPICS = ['hardware','open-hardware','cad','pcb','electronics','mechanical','3d-printing','3d-printed','3d-model','kicad','openscad'];
-            const isHardwareRepo = (repo) => {
+            // No programming language detected? GitHub reports null for hardware repos because it
+            // tags KiCad/STEP/STL files as "data". When a repo has no detected code language we
+            // classify it by name / topic / license:
+            //   PCB (KiCad/Eagle, "*-pcb", electronics)         -> green "PCB" badge (#046307)
+            //   mechanical CAD (CERN-OHL, 3D-printing, chassis) -> navy  "CAD" badge
+            //   genuinely empty                                 -> dark-red "none" badge
+            // electronics-specific vs mechanical-specific signals ('hardware' is generic -> neither)
+            const PCB_NAME   = /(^|[-_])(pcb|pcba|kicad|eagle|circuit)([-_]|$)/i;
+            const CAD_NAME   = /(^|[-_])(cad|chassis|enclosure|mechanical|3d)([-_]|$)/i;
+            const PCB_TOPICS = ['pcb','pcba','kicad','eagle','altium','circuit','schematic','electronics'];
+            const CAD_TOPICS = ['cad','mechanical','3d-printing','3d-printed','3d-model','enclosure','chassis','chassis-design'];
+            const hasTopic = (repo, set) => (repo.topics || []).some(t => set.includes(t));
+            // Returns 'pcb' | 'cad' | null for a repo with no detected code language.
+            const hwClass = (repo) => {
+              if (PCB_NAME.test(repo.name)) return 'pcb';
+              if (CAD_NAME.test(repo.name)) return 'cad';
+              const pcbT = hasTopic(repo, PCB_TOPICS), cadT = hasTopic(repo, CAD_TOPICS);
+              if (pcbT && !cadT) return 'pcb';
+              if (cadT && !pcbT) return 'cad';
+              if (pcbT && cadT) return 'cad'; // both signals -> mechanical wins (a board is secondary to a chassis)
               const spdx = repo.license && repo.license.spdx_id;
-              if (spdx && spdx.indexOf('CERN-OHL') === 0) return true;
-              return (repo.topics || []).some(t => HARDWARE_TOPICS.includes(t));
+              const generic = hasTopic(repo, ['hardware','open-hardware']) || (spdx && spdx.indexOf('CERN-OHL') === 0);
+              return generic ? 'cad' : null; // generic open hardware defaults to CAD
             };
+            const pcbBadge = (style) => `![PCB](https://img.shields.io/badge/PCB-046307?style=${style})`;
             const cadBadge = (style) => `![CAD](https://img.shields.io/badge/CAD-1B2036?style=${style})`;
             const langBadge = (repo, style) => {
               const lang = repo.language;
-              if (lang && HARDWARE_LANGS.has(lang)) return cadBadge(style);
-              if (!lang) return isHardwareRepo(repo) ? cadBadge(style) : `![Language](https://img.shields.io/badge/none-8B1E1E?style=${style})`;
-              const m = LANG[lang];
-              if (m) return `![${lang}](https://img.shields.io/badge/${enc(lang)}-${m[0]}?style=${style}&logo=${m[1]}&logoColor=${m[2]})`;
-              return `![${lang}](https://img.shields.io/badge/${enc(lang)}-6E7681?style=${style})`; // unmapped lang: grey, no logo
+              if (lang) { // GitHub detected real code -> show the language
+                const m = LANG[lang];
+                if (m) return `![${lang}](https://img.shields.io/badge/${enc(lang)}-${m[0]}?style=${style}&logo=${m[1]}&logoColor=${m[2]})`;
+                return `![${lang}](https://img.shields.io/badge/${enc(lang)}-6E7681?style=${style})`; // unmapped lang: grey
+              }
+              const hw = hwClass(repo);
+              if (hw === 'pcb') return pcbBadge(style);
+              if (hw === 'cad') return cadBadge(style);
+              return `![Language](https://img.shields.io/badge/none-8B1E1E?style=${style})`; // empty: dark red
             };
             const licBadge = (spdx, style) => {
               if (!spdx || spdx === 'NOASSERTION') return `![License](https://img.shields.io/badge/none-9E9E9E?style=${style})`;
