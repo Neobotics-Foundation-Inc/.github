@@ -64,7 +64,10 @@ jobs:
                 description = words.slice(0, 3).join(' ') + '...';
               }
               
-              return `| [**${name}**](${repo.html_url})<br><em>${description}</em> | ![Language](https://img.shields.io/github/languages/top/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036) | ![License](https://img.shields.io/github/license/Neobotics-Foundation-Inc/${name}?style=flat-square&label=) | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/${name}?style=flat-square&label=) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/${name}?style=flat-square&label=) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/${name}?style=flat-square&label=) |`;
+              // cacheSeconds=86400 -> shields.io serves these from CDN cache ~daily instead of
+              // hitting the GitHub API on every page view, which avoids the shared-token-pool
+              // rate-limit error ("Unable to select next GitHub token from pool").
+              return `| [**${name}**](${repo.html_url})<br><em>${description}</em> | ![Language](https://img.shields.io/github/languages/top/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036&cacheSeconds=86400) | ![License](https://img.shields.io/github/license/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) |`;
             }).join('\n');
             
             // build the complete table
