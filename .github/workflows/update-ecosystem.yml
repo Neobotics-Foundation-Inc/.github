@@ -52,6 +52,50 @@ jobs:
               return;
             }
             
+            // ---- badge styling: language + license are baked STATIC from the API data we
+            // already have (repo.language / repo.license), so they render instantly with icons
+            // and make zero per-view GitHub API calls. Only the volatile stats stay dynamic.
+            // Similar languages share a hue (JS/TS = gold, C-family = purple, Python = blue);
+            // distinct languages get distinct hues. Value = [color, simple-icons logo, logoColor].
+            const LANG = {
+              'JavaScript':       ['F7DF1E', 'javascript', 'black'],
+              'TypeScript':       ['B8860B', 'typescript', 'white'],
+              'CoffeeScript':     ['9C8A5A', 'coffeescript', 'white'],
+              'Python':           ['3776AB', 'python', 'white'],
+              'Jupyter Notebook': ['5B8DB8', 'jupyter', 'white'],
+              'C':                ['3C2A7A', 'c', 'white'],
+              'C++':              ['7A4FBF', 'cplusplus', 'white'],
+              'C#':               ['512BD4', 'csharp', 'white'],
+              'Java':             ['B07219', 'openjdk', 'white'],
+              'Kotlin':           ['D2691E', 'kotlin', 'white'],
+              'Go':               ['00ADD8', 'go', 'white'],
+              'Rust':             ['CE422B', 'rust', 'white'],
+              'Ruby':             ['CC342D', 'ruby', 'white'],
+              'Swift':            ['F05138', 'swift', 'white'],
+              'Shell':            ['4EAA25', 'gnubash', 'white'],
+              'Dart':             ['0175C2', 'dart', 'white'],
+              'PHP':              ['777BB4', 'php', 'white'],
+              'HTML':             ['E34F26', 'html5', 'white'],
+              'CSS':              ['1572B6', 'css3', 'white'],
+            };
+            // License families share a hue: GPL/copyleft = teal, CERN hardware = blue, permissive = green.
+            const LIC = {
+              'GPL-3.0': '2A9D8F', 'GPL-2.0': '1F7A6E', 'AGPL-3.0': '14635A', 'LGPL-3.0': '4DB6A6',
+              'CERN-OHL-S-2.0': '0053A1', 'CERN-OHL-W-2.0': '2E73B8', 'CERN-OHL-P-2.0': '5B9BD5',
+              'MIT': '3FA66A', 'BSD-2-Clause': '57B894', 'BSD-3-Clause': '2E8B57', 'Apache-2.0': '1E7A46',
+            };
+            const enc = s => String(s).replace(/-/g, '--').replace(/_/g, '__').replace(/ /g, '%20').replace(/#/g, '%23');
+            const langBadge = (lang, style) => {
+              if (!lang) return `![Language](https://img.shields.io/badge/none-9E9E9E?style=${style})`;
+              const m = LANG[lang];
+              if (m) return `![${lang}](https://img.shields.io/badge/${enc(lang)}-${m[0]}?style=${style}&logo=${m[1]}&logoColor=${m[2]})`;
+              return `![${lang}](https://img.shields.io/badge/${enc(lang)}-1B2036?style=${style})`; // unmapped lang: brand navy, no logo
+            };
+            const licBadge = (spdx, style) => {
+              if (!spdx || spdx === 'NOASSERTION') return `![License](https://img.shields.io/badge/none-9E9E9E?style=${style})`;
+              return `![License](https://img.shields.io/badge/${enc(spdx)}-${LIC[spdx] || '6E7681'}?style=${style})`;
+            };
+
             // generate table rows
             const tableRows = filteredRepos.map(repo => {
               const name = repo.name;
@@ -64,10 +108,10 @@ jobs:
                 description = words.slice(0, 3).join(' ') + '...';
               }
               
-              // cacheSeconds=86400 -> shields.io serves these from CDN cache ~daily instead of
-              // hitting the GitHub API on every page view, which avoids the shared-token-pool
-              // rate-limit error ("Unable to select next GitHub token from pool").
-              return `| [**${name}**](${repo.html_url})<br><em>${description}</em> | ![Language](https://img.shields.io/github/languages/top/Neobotics-Foundation-Inc/${name}?style=flat-square&labelColor=1B2036&cacheSeconds=86400) | ![License](https://img.shields.io/github/license/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) |`;
+              // Language/License: static icon badges (no API call). Stats: dynamic with
+              // cacheSeconds=86400 so shields serves from CDN cache ~daily instead of hitting
+              // GitHub on every view (which triggered "Unable to select next GitHub token from pool").
+              return `| [**${name}**](${repo.html_url})<br><em>${description}</em> | ${langBadge(repo.language, 'flat-square')} | ${licBadge(repo.license && repo.license.spdx_id, 'flat-square')} | ![Issues](https://img.shields.io/github/issues/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) | ![Last Commit](https://img.shields.io/github/last-commit/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) | ![Contributors](https://img.shields.io/github/contributors/Neobotics-Foundation-Inc/${name}?style=flat-square&label=&cacheSeconds=86400) |`;
             }).join('\n');
             
             // build the complete table
